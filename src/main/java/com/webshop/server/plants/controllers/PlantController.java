@@ -1,4 +1,5 @@
 package com.webshop.server.plants.controllers;
+import org.springframework.http.ResponseEntity;
 
 import com.webshop.server.plants.entities.Plant;
 import com.webshop.server.plants.repositories.PlantRepository;
@@ -20,14 +21,15 @@ public class PlantController {
         return "Hello";
     }
 
-    @GetMapping("/error")
-    public String getError() {
-        return "Error";
-    }
     @GetMapping("/plants")
-    public Iterable<Plant> getAllPlants() {
-        System.out.println("Hello");
-        return this.plantRepository.findAll();
+    public ResponseEntity<?> getAllPlants() {
+        try {
+            Iterable<Plant> plants = this.plantRepository.findAll();
+            return new ResponseEntity<>(plants, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while retrieving plants");
+        }
     }
 
     @PostMapping("/plants")
