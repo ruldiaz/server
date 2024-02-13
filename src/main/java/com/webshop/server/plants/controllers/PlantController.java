@@ -20,6 +20,10 @@ public class PlantController {
         this.plantRepository = plantRepository;
     }
 
+    @GetMapping()
+    public String getMessage() {
+        return "Hello";
+    }
     @GetMapping("/plants")
     public Iterable<Plant> getAllPlants() {
         System.out.println("Hello");
