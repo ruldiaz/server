@@ -16,11 +16,6 @@ public class ProductController {
     }
 
     @GetMapping()
-    public String getMessage() {
-        return "Hello from products";
-    }
-
-    @GetMapping("/")
     public ResponseEntity<?> getAllProducts() {
         try {
             Iterable<Product> products = this.productRepository.findAll();
@@ -31,7 +26,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@RequestBody Product product) {
         Product newProduct = this.productRepository.save(product);
