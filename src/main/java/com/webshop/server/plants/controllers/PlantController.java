@@ -71,4 +71,17 @@ public class PlantController {
         return updatedPlant;
     }
 
+    @DeleteMapping("plants/{id}")
+    public Plant deletePlant(@PathVariable("id") Integer id) {
+        Optional<Plant> plantToDeleteOptional = this.plantRepository.findById(id);
+        if(!plantToDeleteOptional.isPresent()){
+            return null;
+        }
+
+        // Since it was true
+        Plant plantToDelete = plantToDeleteOptional.get();
+        this.plantRepository.delete(plantToDelete);
+        return plantToDelete;
+    }
+
 }
