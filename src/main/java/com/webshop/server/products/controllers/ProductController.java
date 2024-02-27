@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -23,6 +26,17 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while retrieving products");
+        }
+    }
+
+    @GetMapping("/search")
+    public List<Product> searchProductIsNew(
+            @RequestParam(name="productIsNew", required=false)
+            Boolean productIsNew){
+        if(productIsNew != null){
+            return this.productRepository.findByProductIsNewTrue();
+        }else{
+            return new ArrayList<>();
         }
     }
 
